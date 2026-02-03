@@ -1,0 +1,119 @@
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          
+            <div *ngFor="let category of categories$ | async; let i = index"
+                class="bg-white/10 backdrop-blur-lg rounded-3xl overflow-hidden border-2 
+                        transition-all duration-500 hover:scale-105 hover:shadow-2xl
+                        animate-fade-in-up shimmer-effect group"
+                [ngClass]="{
+                    'border-rose-300/30 hover:border-rose-300/60': category.color === 'rose',
+                    'border-pink-300/30 hover:border-pink-300/60': category.color === 'pink',
+                    'border-amber-300/30 hover:border-amber-300/60': category.color === 'amber',
+                    'delay-100': i === 1,
+                    'delay-200': i === 2
+                }">
+
+                <!-- Header de la carte -->
+                <div [ngClass]="{
+                    'bg-gradient-to-br from-rose-600 to-red-700': category.color === 'rose',
+                    'bg-gradient-to-br from-pink-600 to-rose-700': category.color === 'pink',
+                    'bg-gradient-to-br from-amber-600 to-orange-700': category.color === 'amber'
+                    }"
+                    class="p-8 text-center relative">
+                <div class="absolute top-4 right-4 text-4xl">{{ category.icon }}</div>
+                <h3 class="font-playfair text-4xl font-bold mb-2">{{ category.title }}</h3>
+                <p [ngClass]="{
+                    'text-rose-100': category.color === 'rose',
+                    'text-pink-100': category.color === 'pink',
+                    'text-amber-100': category.color === 'amber'
+                    }"
+                    class="text-sm tracking-wider uppercase">
+                    {{ category.subtitle }}
+                </p>
+                </div>
+
+                <!-- Description -->
+                <div class="p-6">
+                <p [ngClass]="{
+                    'text-rose-100': category.color === 'rose',
+                    'text-pink-100': category.color === 'pink',
+                    'text-amber-100': category.color === 'amber'
+                    }"
+                    class="mb-6 text-center">
+                    {{ category.description }}
+                </p>
+
+                <!-- Produits -->
+                <div class="space-y-3 mb-6">
+                    <h4 class="font-semibold text-rose-200 text-sm uppercase tracking-wider border-b border-rose-300/30 pb-2">
+                    Produits potentiels :
+                    </h4>
+
+                    <div *ngFor="let product of category.products" 
+                        class="flex items-center gap-3 bg-white/5 p-3 rounded-lg hover:bg-white/10 transition-colors">
+                    <span class="text-2xl">{{ product.icon }}</span>
+                    <span [ngClass]="{
+                            'text-rose-100': category.color === 'rose',
+                            'text-pink-100': category.color === 'pink',
+                            'text-amber-100': category.color === 'amber'
+                        }">
+                        {{ product.name }}
+                    </span>
+                    </div>
+                </div>
+
+                <!-- Note mystère -->
+                <div [ngClass]="{
+                        'bg-rose-500/20 border-rose-300/30': category.color === 'rose',
+                        'bg-pink-500/20 border-pink-300/30': category.color === 'pink',
+                        'bg-amber-500/20 border-amber-300/30': category.color === 'amber'
+                    }"
+                    class="rounded-lg p-4 mb-6">
+                    <p [ngClass]="{
+                        'text-rose-100': category.color === 'rose',
+                        'text-pink-100': category.color === 'pink',
+                        'text-amber-100': category.color === 'amber'
+                        }"
+                    class="text-sm text-center">
+                    <span class="font-semibold">🎲 Mystère :</span> {{ category.mystery }}
+                    </p>
+                </div>
+
+                <!-- Bouton (click)="getCategory(category.id)" -->
+                <button  [routerLink]="['/checkout', category.id]"
+                
+                 [ngClass]="{
+                            'bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600': category.color === 'rose',
+                            'bg-gradient-to-r from-pink-600 to-rose-700 hover:from-pink-500 hover:to-rose-600': category.color === 'pink',
+                            'bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600': category.color === 'amber'
+                        }"
+                        class="w-full text-white font-semibold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    Choisir {{ category.title }}
+                </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Informations supplémentaires -->
+        <div class="max-w-4xl mx-auto mt-16 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-rose-300/20">
+            <h3 class="font-playfair text-3xl font-bold text-center mb-6 text-rose-200">
+                ✨ Comment fonctionne la sélection ?
+            </h3>
+            <div class="space-y-4 text-rose-100">
+                <p class="flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">🎯</span>
+                    <span>Lorsque vous choisissez une catégorie, notre système sélectionne automatiquement une combinaison unique de produits parmi ceux disponibles.</span>
+                </p>
+                <p class="flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">🎁</span>
+                    <span>Chaque boîte est différente - vous ne saurez exactement ce que vous recevrez qu'à l'ouverture !</span>
+                </p>
+                <p class="flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">💝</span>
+                    <span>Tous les produits sont de haute qualité et soigneusement emballés pour créer une expérience inoubliable.</span>
+                </p>
+            </div>
+        </div>
+    </main>

@@ -1,0 +1,149 @@
+<!-- Hero Section -->
+    <main class="container mx-auto px-4 py-12 md:py-20">
+        <div class="max-w-4xl mx-auto text-center">
+            
+            <!-- Icône cadeau animée -->
+            <div class="mb-12 animate-float">
+                <svg class="w-32 h-32 md:w-40 md:h-40 mx-auto" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Box body -->
+                    <rect x="40" y="80" width="120" height="90" fill="#be123c" stroke="#fda4af" stroke-width="2" rx="4"/>
+                    
+                    <!-- Box lid -->
+                    <rect x="35" y="60" width="130" height="25" fill="#9f1239" stroke="#fda4af" stroke-width="2" rx="4"/>
+                    
+                    <!-- Ribbon vertical -->
+                    <rect x="95" y="60" width="10" height="110" fill="#fda4af"/>
+                    
+                    <!-- Ribbon horizontal -->
+                    <rect x="40" y="120" width="120" height="10" fill="#fda4af"/>
+                    
+                    <!-- Bow left -->
+                    <ellipse cx="80" cy="60" rx="18" ry="12" fill="#fda4af"/>
+                    <!-- Bow right -->
+                    <ellipse cx="120" cy="60" rx="18" ry="12" fill="#fda4af"/>
+                    <!-- Bow center -->
+                    <circle cx="100" cy="60" r="8" fill="#fb7185"/>
+                    
+                    <!-- Question mark for mystery -->
+                    <text x="100" y="135" font-size="40" fill="#fda4af" text-anchor="middle" font-weight="bold">?</text>
+                </svg>
+            </div>
+
+            <!-- Titre principal -->
+            <h2 class="font-playfair text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in-up delay-400">
+                Offrez un cadeau <span class="italic text-rose-300">mystère</span><br>
+                <span class="text-3xl md:text-5xl">inoubliable pour la Saint-Valentin</span>
+            </h2>
+
+            <!-- Description -->
+            <p class="text-lg md:text-xl text-rose-100 mb-12 leading-relaxed max-w-2xl mx-auto animate-fade-in-up delay-600">
+                Choisissez une catégorie, laissez-nous composer le cadeau parfait. 
+                Chaque boîte contient une <span class="font-semibold text-pink-200">sélection surprise</span> de produits 
+                soigneusement choisis pour faire battre le cœur de votre partenaire.
+            </p>
+
+            <!-- CTA Button -->
+            <div class="mb-16 animate-fade-in-up delay-600">
+                
+                <a routerLink="/categories" 
+                   class="inline-block px-10 py-5 bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 
+                          text-white text-lg md:text-xl font-semibold rounded-full 
+                          transform transition-all duration-300 hover:scale-105 
+                          shadow-2xl shine-effect animate-pulse-glow
+                          border-2 border-rose-300 tracking-wide uppercase">
+                    🎁 Découvrir les catégories
+                </a>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mt-20">
+                <!-- Feature 1 -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-rose-300/30 
+                            hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:border-rose-300/50
+                            animate-fade-in-up delay-600">
+                    <div class="text-5xl mb-4">💝</div>
+                    <h3 class="font-playfair text-2xl font-bold mb-3 text-rose-200">100% Surprise</h3>
+                    <p class="text-rose-100/80">
+                        Vous connaissez la catégorie, mais pas le contenu exact. 
+                        L'effet de surprise garanti !
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-rose-300/30 
+                            hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:border-rose-300/50
+                            animate-fade-in-up delay-600">
+                    <div class="text-5xl mb-4">✨</div>
+                    <h3 class="font-playfair text-2xl font-bold mb-3 text-rose-200">Qualité Premium</h3>
+                    <p class="text-rose-100/80">
+                        Chaque produit est soigneusement sélectionné pour créer 
+                        une expérience mémorable.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-rose-300/30 
+                            hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:border-rose-300/50
+                            animate-fade-in-up delay-600">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="font-playfair text-2xl font-bold mb-3 text-rose-200">3 Catégories</h3>
+                    <p class="text-rose-100/80">
+                        Galant, Romantique ou Le Boss. 
+                        Chaque style correspond à une personnalité unique.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Section Comment ça marche -->
+    <section class="container mx-auto px-4 py-16 max-w-4xl">
+        <h2 class="font-playfair text-4xl md:text-5xl font-bold text-center mb-12 text-rose-200">
+            Comment ça marche ?
+        </h2>
+        
+        <div class="space-y-8">
+            <!-- Step 1 -->
+            <div class="flex items-start gap-6 bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-rose-300/20">
+                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-rose-500 to-red-600 rounded-full 
+                            flex items-center justify-center text-2xl font-bold">
+                    1
+                </div>
+                <div>
+                    <h3 class="font-playfair text-2xl font-bold mb-2 text-rose-200">Choisissez votre catégorie</h3>
+                    <p class="text-rose-100/80">
+                        Sélectionnez parmi Galant, Romantique ou Le Boss selon le style de votre partenaire.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex items-start gap-6 bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-rose-300/20">
+                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-rose-500 to-red-600 rounded-full 
+                            flex items-center justify-center text-2xl font-bold">
+                    2
+                </div>
+                <div>
+                    <h3 class="font-playfair text-2xl font-bold mb-2 text-rose-200">Découvrez les produits potentiels</h3>
+                    <p class="text-rose-100/80">
+                        Voyez la liste des produits possibles dans chaque catégorie, mais gardez le mystère sur ce que vous recevrez !
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex items-start gap-6 bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-rose-300/20">
+                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-rose-500 to-red-600 rounded-full 
+                            flex items-center justify-center text-2xl font-bold">
+                    3
+                </div>
+                <div>
+                    <h3 class="font-playfair text-2xl font-bold mb-2 text-rose-200">Validez et payez</h3>
+                    <p class="text-rose-100/80">
+                        Notre système sélectionnera automatiquement une combinaison surprise de produits pour vous !
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
