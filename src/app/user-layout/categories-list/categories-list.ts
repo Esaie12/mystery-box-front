@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Category } from '../../models/categories.model';
 import { CategoryService } from '../../services/category-service';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-categories-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CurrencyPipe],
   templateUrl: './categories-list.html',
   styleUrls: ['./categories-list.css']
 })

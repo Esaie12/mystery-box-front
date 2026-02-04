@@ -4,40 +4,46 @@
             <!-- Logo -->
             <a routerLink=""
                 class="font-playfair text-2xl font-bold bg-gradient-to-r from-pink-200 to-rose-300 bg-clip-text text-transparent">
-                MLB
+                MyK
             </a>
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-6 ml-auto">
 
-                <a routerLink="/categories" routerLinkActive="active"  class="text-rose-200 hover:text-white transition text-sm md:text-base font-medium">
-                    🛒 Commander
-                </a>
+    <a routerLink="/categories" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+        Commander
+    </a>
 
-                <a routerLink="/tracking" routerLinkActive="active" class="text-rose-200 hover:text-white transition text-sm md:text-base font-medium">
-                    📦 Suivre commande
-                </a>
+    <a routerLink="/tracking" routerLinkActive="active"
+       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+        Suivre commande
+    </a>
 
-                <a *ngIf="loginService.isLoggedIn()" routerLink="/my-orders" routerLinkActive="active" class="text-rose-200 hover:text-white transition text-sm md:text-base font-medium">
-                    📦 Mes commandes
-                </a>
+    <a *ngIf="loginService.isLoggedIn()" routerLink="/my-orders" routerLinkActive="active"
+       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+        Mes commandes
+    </a>
 
-                <a  routerLink="/contact" routerLinkActive="active" class="text-rose-200 hover:text-white transition text-sm md:text-base font-medium">
-                    💬 Contact
-                </a>
+    <a routerLink="/contact" routerLinkActive="active"
+       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+        Contact
+    </a>
 
-                <!-- Connexion = bouton desktop -->
-                <a  *ngIf="!loginService.isLoggedIn()"  routerLink="/login" class="ml-4 bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition">
-                    🔐 Connexion
-                </a>
+    <!-- Connexion = bouton desktop -->
+    <a *ngIf="!loginService.isLoggedIn()" routerLink="/login"
+       class="ml-4 bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition">
+        Connexion
+    </a>
 
-                <button *ngIf="loginService.isLoggedIn()" 
-                        (click)="seDeconnecter()"
-                        class="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-500 transition">
-                    Se déconnecter
-                </button>
+    <button *ngIf="loginService.isLoggedIn()" 
+            (click)="seDeconnecter()"
+            class="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-500 transition">
+        Se déconnecter
+    </button>
 
-            </div>
+</div>
+
 
             <!-- Mobile menu button -->
             <button (click)="toggleMobileMenu()" class="md:hidden ml-auto text-rose-200 hover:text-white p-2">
@@ -61,7 +67,7 @@
         <!-- Logo principal -->
         <div class="text-center">
             <h1 class="font-playfair text-5xl md:text-7xl font-bold mb-2 bg-gradient-to-r from-pink-200 via-rose-300 to-red-200 bg-clip-text text-transparent animate-fade-in-up">
-                Mystery Love Box
+                Mystery kdo
             </h1>
             <p class="text-rose-200 text-sm md:text-base tracking-[0.3em] uppercase animate-fade-in-up delay-200">
                 L'art de la surprise

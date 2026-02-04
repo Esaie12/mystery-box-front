@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

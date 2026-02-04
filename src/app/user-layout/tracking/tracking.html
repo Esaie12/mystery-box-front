@@ -16,7 +16,7 @@
                 <form class="flex flex-col md:flex-row gap-4" (ngSubmit)="searchOrder()">
                     <input [(ngModel)]="orderNumber" name="orderNumber"
                         type="text" 
-                        placeholder="Ex: MLB-2026-001234"
+                        placeholder="Ex: MyK-2026-001234"
                         class="flex-1 px-6 py-4 rounded-xl bg-white/5 border border-rose-300/30 
                                text-white placeholder-rose-300/50 text-lg
                                focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/50
@@ -33,120 +33,221 @@
                 </form>
             </div>
 
-            <!-- Example Order Status (shown after search) -->
-            <div *ngIf="order$ | async as order" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-rose-300/30 shadow-2xl animate-fade-in-up delay-200">
-                
-                <!-- Order Header -->
-                <div class="border-b border-rose-300/30 pb-6 mb-6">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+
+           
+
+            <ng-container *ngIf="hasSearched">
+                 <div *ngIf="isLoading" class="text-center text-white mb-8 animate-pulse">
+                    🔄 Chargement...
+                </div>
+                <!-- Example Order Status (shown after search) -->
+                <div *ngIf="order$ | async as order" >
+                    <div *ngIf="!(isEmpty(order$ | async)); else notFound" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-rose-300/30 shadow-2xl animate-fade-in-up delay-200">
                         <div>
-                            <h3 class="font-playfair text-2xl font-bold mb-2">Commande #{{ order.reference }}</h3>
-                            <p class="text-rose-200">Passée le 10 février 2026</p>
+                            <!-- Order Header -->
+                            <div class="border-b border-rose-300/30 pb-6 mb-6">
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                                    <div>
+                                        <h3 class="font-playfair text-2xl font-bold mb-2">Commande #{{ order.reference }}</h3>
+                                        <p class="text-rose-200">Passée le 10 février 2026</p>
+                                    </div>
+                                    <div class="px-4 py-2 bg-green-500/20 border border-green-400/50 rounded-full text-green-300 font-semibold">
+                                        ✓ En livraison
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Order Details -->
+                            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                                <div>
+                                    <h4 class="text-rose-300 font-semibold mb-2">📦 Catégorie</h4>
+                                    <p class="text-white text-lg">Romantique</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-rose-300 font-semibold mb-2">📅 Livraison prévue</h4>
+                                    <p class="text-white text-lg">14 février 2026</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-rose-300 font-semibold mb-2">📍 Adresse</h4>
+                                    <p class="text-white">123 Rue de l'Amour<br>75001 Paris, France</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-rose-300 font-semibold mb-2">💰 Montant</h4>
+                                    <p class="text-white text-lg font-semibold">49,99 €</p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline -->
+                            <div class="space-y-6">
+                                <h4 class="font-playfair text-2xl font-bold mb-6">Historique de livraison</h4>
+                                
+                                <!-- Step 1 - Complete -->
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
+                                            ✓
+                                        </div>
+                                        <div class="w-0.5 h-full bg-green-500 mt-2"></div>
+                                    </div>
+                                    <div class="flex-1 pb-8">
+                                        <h5 class="text-white font-semibold mb-1">Commande confirmée</h5>
+                                        <p class="text-rose-200 text-sm mb-2">10 février 2026, 14:30</p>
+                                        <p class="text-rose-100/70 text-sm">Votre commande a été reçue et est en préparation.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 - Complete -->
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
+                                            ✓
+                                        </div>
+                                        <div class="w-0.5 h-full bg-green-500 mt-2"></div>
+                                    </div>
+                                    <div class="flex-1 pb-8">
+                                        <h5 class="text-white font-semibold mb-1">Cadeau mystère préparé</h5>
+                                        <p class="text-rose-200 text-sm mb-2">11 février 2026, 09:15</p>
+                                        <p class="text-rose-100/70 text-sm">Notre équipe a sélectionné vos produits surprise avec soin.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 - Current -->
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold animate-pulse">
+                                            📦
+                                        </div>
+                                        <div class="w-0.5 h-full bg-rose-300/30 mt-2"></div>
+                                    </div>
+                                    <div class="flex-1 pb-8">
+                                        <h5 class="text-white font-semibold mb-1">En cours de livraison</h5>
+                                        <p class="text-rose-200 text-sm mb-2">12 février 2026, 11:00</p>
+                                        <p class="text-rose-100/70 text-sm">Votre colis est en route vers sa destination.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 - Pending -->
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-10 h-10 rounded-full bg-white/10 border-2 border-rose-300/30 flex items-center justify-center text-rose-300">
+                                            🎁
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h5 class="text-rose-300 font-semibold mb-1">Livraison</h5>
+                                        <p class="text-rose-200/70 text-sm">Prévue pour le 14 février 2026</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Additional Info -->
+                            <div class="mt-8 p-6 bg-rose-500/10 border border-rose-300/30 rounded-xl">
+                                <p class="text-rose-200 text-center">
+                                    <span class="font-semibold">💡 Astuce :</span> 
+                                    Vous recevrez un email de notification à chaque étape de votre commande.
+                                </p>
+                            </div>
                         </div>
-                        <div class="px-4 py-2 bg-green-500/20 border border-green-400/50 rounded-full text-green-300 font-semibold">
-                            ✓ En livraison
-                        </div>
+
                     </div>
+
                 </div>
 
-                <!-- Order Details -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div>
-                        <h4 class="text-rose-300 font-semibold mb-2">📦 Catégorie</h4>
-                        <p class="text-white text-lg">Romantique</p>
-                    </div>
-                    <div>
-                        <h4 class="text-rose-300 font-semibold mb-2">📅 Livraison prévue</h4>
-                        <p class="text-white text-lg">14 février 2026</p>
-                    </div>
-                    <div>
-                        <h4 class="text-rose-300 font-semibold mb-2">📍 Adresse</h4>
-                        <p class="text-white">123 Rue de l'Amour<br>75001 Paris, France</p>
-                    </div>
-                    <div>
-                        <h4 class="text-rose-300 font-semibold mb-2">💰 Montant</h4>
-                        <p class="text-white text-lg font-semibold">49,99 €</p>
-                    </div>
-                </div>
-
-                <!-- Timeline -->
-                <div class="space-y-6">
-                    <h4 class="font-playfair text-2xl font-bold mb-6">Historique de livraison</h4>
-                    
-                    <!-- Step 1 - Complete -->
-                    <div class="flex gap-4">
-                        <div class="flex flex-col items-center">
-                            <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
-                                ✓
-                            </div>
-                            <div class="w-0.5 h-full bg-green-500 mt-2"></div>
-                        </div>
-                        <div class="flex-1 pb-8">
-                            <h5 class="text-white font-semibold mb-1">Commande confirmée</h5>
-                            <p class="text-rose-200 text-sm mb-2">10 février 2026, 14:30</p>
-                            <p class="text-rose-100/70 text-sm">Votre commande a été reçue et est en préparation.</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 - Complete -->
-                    <div class="flex gap-4">
-                        <div class="flex flex-col items-center">
-                            <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
-                                ✓
-                            </div>
-                            <div class="w-0.5 h-full bg-green-500 mt-2"></div>
-                        </div>
-                        <div class="flex-1 pb-8">
-                            <h5 class="text-white font-semibold mb-1">Cadeau mystère préparé</h5>
-                            <p class="text-rose-200 text-sm mb-2">11 février 2026, 09:15</p>
-                            <p class="text-rose-100/70 text-sm">Notre équipe a sélectionné vos produits surprise avec soin.</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 - Current -->
-                    <div class="flex gap-4">
-                        <div class="flex flex-col items-center">
-                            <div class="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold animate-pulse">
-                                📦
-                            </div>
-                            <div class="w-0.5 h-full bg-rose-300/30 mt-2"></div>
-                        </div>
-                        <div class="flex-1 pb-8">
-                            <h5 class="text-white font-semibold mb-1">En cours de livraison</h5>
-                            <p class="text-rose-200 text-sm mb-2">12 février 2026, 11:00</p>
-                            <p class="text-rose-100/70 text-sm">Votre colis est en route vers sa destination.</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 - Pending -->
-                    <div class="flex gap-4">
-                        <div class="flex flex-col items-center">
-                            <div class="w-10 h-10 rounded-full bg-white/10 border-2 border-rose-300/30 flex items-center justify-center text-rose-300">
-                                🎁
+                <!-- Not Found Template -->
+                <ng-template #notFound>
+                    <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-12 md:p-16 border border-rose-300/30 shadow-2xl text-center animate-fade-in-up delay-200">
+                
+                        <!-- Error Icon -->
+                        <div id="error-icon" class="mb-8">
+                            <div class="inline-block p-6 bg-red-500/20 rounded-full border-4 border-red-400/50">
+                                <svg class="w-24 h-24 md:w-32 md:h-32 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
                             </div>
                         </div>
-                        <div class="flex-1">
-                            <h5 class="text-rose-300 font-semibold mb-1">Livraison</h5>
-                            <p class="text-rose-200/70 text-sm">Prévue pour le 14 février 2026</p>
+
+                        <!-- Error Message -->
+                        <h3 class="font-playfair text-3xl md:text-4xl font-bold mb-4 text-white">
+                            Commande introuvable
+                        </h3>
+                        
+                        <p class="text-rose-200 text-lg mb-2">
+                            Le numéro de commande <span class="font-mono font-bold text-white">{{orderNumber}}</span> n'existe pas dans notre système.
+                        </p>
+                        
+                        <p class="text-rose-300 text-base mb-8">
+                            Veuillez vérifier le numéro et réessayer.
+                        </p>
+
+                        <!-- Possible Reasons -->
+                        <div class="bg-red-500/10 border border-red-400/30 rounded-2xl p-6 mb-8 text-left max-w-2xl mx-auto">
+                            <h4 class="font-semibold text-lg text-white mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Raisons possibles :
+                            </h4>
+                            <ul class="space-y-3 text-rose-200">
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 flex-shrink-0 mt-1">•</span>
+                                    <span>Le numéro de commande contient une erreur de frappe</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 flex-shrink-0 mt-1">•</span>
+                                    <span>Le numéro provient d'un autre site ou vendeur</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-red-400 flex-shrink-0 mt-1">•</span>
+                                    <span>La commande a été annulée ou supprimée</span>
+                                </li>
+                            </ul>
                         </div>
+
+                        <!-- Help Section -->
+                        <div class="mb-8">
+                            <h4 class="font-semibold text-lg text-white mb-4">Où trouver mon numéro de commande ?</h4>
+                            <div class="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                                <div class="bg-white/5 rounded-xl p-4 border border-rose-300/20">
+                                    <div class="text-3xl mb-2">📧</div>
+                                    <h5 class="font-semibold text-white mb-1">Email de confirmation</h5>
+                                    <p class="text-rose-200 text-sm">Vérifiez votre boîte mail (et spams)</p>
+                                </div>
+                                <div class="bg-white/5 rounded-xl p-4 border border-rose-300/20">
+                                    <div class="text-3xl mb-2">👤</div>
+                                    <h5 class="font-semibold text-white mb-1">Mon compte</h5>
+                                    <p class="text-rose-200 text-sm">Consultez votre historique de commandes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Support -->
+                        <div class="pt-6 border-t border-rose-300/30">
+                            <p class="text-rose-200 mb-4">Toujours un problème ?</p>
+                            <a 
+                                routerLink="/contact"
+                                class="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 
+                                    border border-rose-300/30 hover:border-rose-300/50
+                                    text-rose-200 hover:text-white rounded-xl transition-all duration-300"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                                Contacter le support
+                            </a>
+                        </div>
+
                     </div>
+                </ng-template>
 
-                </div>
+            </ng-container>
 
-                <!-- Additional Info -->
-                <div class="mt-8 p-6 bg-rose-500/10 border border-rose-300/30 rounded-xl">
-                    <p class="text-rose-200 text-center">
-                        <span class="font-semibold">💡 Astuce :</span> 
-                        Vous recevrez un email de notification à chaque étape de votre commande.
-                    </p>
-                </div>
-
-            </div>
+            
 
             <!-- Help Section -->
             <div class="mt-12 text-center animate-fade-in-up delay-300">
                 <p class="text-rose-200 mb-4">Besoin d'aide avec votre commande ?</p>
-                <a href="contact.html" 
+                <a routerLink="/contact"
                    class="inline-block px-8 py-3 bg-white/10 border border-rose-300/30 
                           hover:bg-white/15 hover:border-rose-300/50 rounded-xl
                           text-rose-200 hover:text-white transition-all duration-300">

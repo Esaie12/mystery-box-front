@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService, RegisterData } from '../../services/auth-service';
+import { finalize } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule,CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
   standalone: true,
@@ -16,6 +18,10 @@ export class Register {
   
   private fb = inject(FormBuilder);
   private router = inject(Router);
+
+  
+  isLoading = false; // propriété pour gérer le loading
+
 
   form = this.fb.group({
     nameCtrl: [
@@ -72,36 +78,35 @@ export class Register {
   }
 
   sendInformation() {
-    // 1️⃣ Vérification du formulaire
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       console.warn('❌ Formulaire invalide', this.form.errors, this.form.value);
       return;
     }
 
-    // 2️⃣ Construction du payload à envoyer à l’API
     const payload: RegisterData = {
-      name: this.form.value.nameCtrl!, // le ! dit "je garantis que ce n'est pas null/undefined"
+      name: this.form.value.nameCtrl!,
       email: this.form.value.emailCtrl!,
       phone: this.form.value.phoneCtrl!,
       password: this.form.value.passwordCtrl!,
       password_confirmation: this.form.value.confirmpasswordCtrl!,
-      accept_terms: this.form.value.acceptCtrl ?? false      // si null/undefined, on met false
+      accept_terms: this.form.value.acceptCtrl ?? false
     };
 
-    console.log('📩 Envoi des données :', payload);
+    this.isLoading = true; // 🔒 Bloque le bouton dès le départ
 
-    // 3️⃣ Appel API via AuthService
-    this.authService.register(payload).subscribe({
+    this.authService.register(payload).pipe(
+      finalize(() => {
+        this.isLoading = false; // ⬅ Toujours reset après succès ou erreur
+      })
+    ).subscribe({
       next: (res) => {
         console.log('✅ Inscription réussie !', res);
-        // 4️⃣ Redirection après inscription
         this.router.navigate(['/categories']);
       },
       error: (err) => {
         console.error('❌ Erreur lors de l’inscription', err);
-        // 5️⃣ Afficher message d’erreur côté UI
-        // par ex. err.error.message ou err.error.errors
+        // Gestion des erreurs de validation venant du backend
         if (err.error?.errors) {
           Object.keys(err.error.errors).forEach(field => {
             const control = this.form.get(field + 'Ctrl');
@@ -111,7 +116,7 @@ export class Register {
           });
         }
       }
-  });
-}
+    });
+  }
 
 }

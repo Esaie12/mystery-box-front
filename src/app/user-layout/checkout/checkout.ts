@@ -6,6 +6,7 @@ import { catchError, EMPTY, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckoutService } from '../../services/checkout-service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,14 +20,27 @@ export class Checkout {
   router = inject(Router);
   categoryService = inject(CategoryService);
   checkoutService = inject(CheckoutService);
+  private authService = inject(AuthService);
+
+  private token = "";
 
   category$!: Observable<Category>;
+  error?: string;
 
   private fb = inject(FormBuilder);
 
   categoryId = Number(this.route.snapshot.paramMap.get('id'));
 
   constructor() {
+
+    // ✅ Vérifier si l'utilisateur est connecté dès le départ
+    const token = this.authService.getToken();
+    if (!token) {
+      console.warn('Utilisateur non connecté, redirection vers login');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.categoryId = id;
     
@@ -36,6 +50,7 @@ export class Checkout {
         return EMPTY;
       })
     );
+
   }
 
   //Recuperer les entrées
@@ -86,17 +101,18 @@ export class Checkout {
   
 
   submitOrder() {
+    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       console.warn('❌ Formulaire invalide');
 
       // 🔹 Parcourir chaque contrôle et afficher les erreurs
-    Object.keys(this.form.controls).forEach(key => {
-      const control = this.form.get(key);
-      if (control && control.invalid) {
-        console.error(`⚠️ Erreurs sur ${key}:`, control.errors);
-      }
-    });
+      Object.keys(this.form.controls).forEach(key => {
+        const control = this.form.get(key);
+        if (control && control.invalid) {
+          console.error(`⚠️ Erreurs sur ${key}:`, control.errors);
+        }
+      });
     
       return;
     }
@@ -110,7 +126,14 @@ export class Checkout {
     // 🔥 1️⃣ Afficher en console
     //console.log('📦 Données envoyées :', payload);
 
-    this.checkoutService.createOrder(payload).subscribe({
+    const token = this.authService.getToken();
+
+    if (!token) {
+      this.error = 'Vous devez être connecté';
+      return;
+    }
+
+    this.checkoutService.createOrder(payload,token).subscribe({
       next: (res) => {
         console.log('✅ Commande créée', res);
         this.router.navigate(['/my-orders']);

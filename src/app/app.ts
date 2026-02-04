@@ -1,7 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './user-layout/header/header';
-import { Footer } from './user-layout/footer/footer';
 
 /*
 @Component({
@@ -26,13 +24,13 @@ import { Footer } from './user-layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports:[RouterOutlet, Header, Footer ],
+  imports:[RouterOutlet],
   template: `<router-outlet></router-outlet>`,
   //styleUrl:'./app.css'
 })
 
 export class App {
-  protected readonly title = signal('Gestion de pressing');
+  protected readonly title = signal("Mystery Kdo - Dans le mystère des cadeaux");
  /* counter=0;
   theValue="";
   theColor : 'success' | 'danger' = "success";

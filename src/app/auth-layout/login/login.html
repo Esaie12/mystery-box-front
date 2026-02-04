@@ -21,7 +21,7 @@
                     <!-- Email -->
                     <div>
                         <label for="email" class="block text-rose-200 text-sm font-medium mb-2">
-                            📧 Email
+                            Email
                         </label>
                         <input 
                             type="email" 
@@ -38,7 +38,7 @@
                     <!-- Password -->
                     <div>
                         <label for="password" class="block text-rose-200 text-sm font-medium mb-2">
-                            🔒 Mot de passe
+                            Mot de passe
                         </label>
                         <input   [(ngModel)]="data.userPassword"
                             type="password"  name="userPassword"
@@ -66,11 +66,13 @@
                     <!-- Submit Button -->
                     <button 
                         (click)="seConnecter()"
+                        [disabled]="isLoading"
                         class="w-full bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 
                                text-white font-semibold py-4 rounded-xl transition-all duration-300 
                                transform hover:scale-105 shadow-lg hover:shadow-xl"
                     >
-                        Se connecter
+                        <span *ngIf="!isLoading">Se connecter</span>
+                        <span *ngIf="isLoading">Connexion en cours...</span>
                     </button>
 
                     <!-- Divider -->

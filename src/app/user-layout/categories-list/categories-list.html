@@ -1,8 +1,8 @@
 
     <main class="container mx-auto px-4 py-12">
-        <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto" *ngIf="categories$ | async as categories; else loading">
           
-            <div *ngFor="let category of categories$ | async; let i = index"
+            <div *ngFor="let category of categories; let i = index"
                 class="bg-white/10 backdrop-blur-lg rounded-3xl overflow-hidden border-2 
                         transition-all duration-500 hover:scale-105 hover:shadow-2xl
                         animate-fade-in-up shimmer-effect group"
@@ -76,7 +76,7 @@
                         'text-amber-100': category.color === 'amber'
                         }"
                     class="text-sm text-center">
-                    <span class="font-semibold">🎲 Mystère :</span> {{ category.mystery }}
+                     <!--span class="font-semibold">🎲 Mystère :</span--> {{ category.mystery }}
                     </p>
                 </div>
 
@@ -89,11 +89,20 @@
                             'bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600': category.color === 'amber'
                         }"
                         class="w-full text-white font-semibold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    Choisir {{ category.title }}
+                    Choisir {{ category.title }} pour {{ category.price | currency:'XOF' }}
                 </button>
                 </div>
             </div>
         </div>
+
+        <ng-template #loading>
+            <div class="flex justify-center items-center min-h-[300px]">
+                <div
+                class="w-16 h-16 border-4 border-rose-300/30 border-t-rose-500 rounded-full animate-spin">
+                </div>
+            </div>
+        </ng-template>
+
 
 
         <!-- Informations supplémentaires -->

@@ -1,5 +1,5 @@
 <main class="container mx-auto px-4 py-8">
-        <div class="max-w-7xl mx-auto" *ngIf="category$ | async as category">
+        <div class="max-w-7xl mx-auto" *ngIf="category$ | async as category ; else loading">
             
             <!-- Page Title -->
             <div class="text-center mb-8 animate-fade-in-up">
@@ -361,4 +361,13 @@
             </div>
 
         </div>
+
+        <ng-template #loading>
+            <div class="flex justify-center items-center min-h-[300px]">
+                <div
+                class="w-16 h-16 border-4 border-rose-300/30 border-t-rose-500 rounded-full animate-spin">
+                </div>
+            </div>
+        </ng-template>
+
 </main>

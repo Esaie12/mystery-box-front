@@ -1,0 +1,91 @@
+
+        body {
+            font-family: 'Raleway', sans-serif;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Dropdown menu styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 200px;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 0.5rem;
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-menu,
+        .dropdown-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Table hover effect */
+        tbody tr:hover {
+            background-color: rgba(251, 113, 133, 0.05);
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-shipped {
+            background-color: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .status-delivered {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+   

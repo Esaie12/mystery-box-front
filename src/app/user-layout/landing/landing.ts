@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -10,4 +10,5 @@ import { RouterLink } from '@angular/router';
 })
 export class Landing {
 
+  
 }

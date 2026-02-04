@@ -25,7 +25,7 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div *ngIf="stats$ | async as stats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             
             <!-- Total Orders -->
             <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
@@ -38,35 +38,19 @@
                     <span class="text-sm font-semibold text-green-600">+12%</span>
                 </div>
                 <h3 class="text-gray-600 text-sm font-medium mb-1">Total Commandes</h3>
-                <p class="text-3xl font-bold text-gray-900">248</p>
-            </div>
-
-            <!-- Pending -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="p-3 bg-yellow-100 rounded-lg">
-                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-semibold text-red-600">-3%</span>
-                </div>
-                <h3 class="text-gray-600 text-sm font-medium mb-1">En attente</h3>
-                <p class="text-3xl font-bold text-gray-900">12</p>
+                <p class="text-3xl font-bold text-gray-900">{{ stats.total_orders }}</p>
             </div>
 
             <!-- Shipped -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div *ngFor="let s of stats.orders_by_status" class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
                 <div class="flex items-center justify-between mb-4">
                     <div class="p-3 bg-purple-100 rounded-lg">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
-                        </svg>
+                        {{ s.emoji }}
                     </div>
                     <span class="text-sm font-semibold text-green-600">+8%</span>
                 </div>
-                <h3 class="text-gray-600 text-sm font-medium mb-1">En livraison</h3>
-                <p class="text-3xl font-bold text-gray-900">34</p>
+                <h3 class="text-gray-600 text-sm font-medium mb-1">{{ s.status }}</h3>
+                <p class="text-3xl font-bold text-gray-900">{{ s.count }}</p>
             </div>
 
             <!-- Revenue -->
@@ -80,7 +64,7 @@
                     <span class="text-sm font-semibold text-green-600">+23%</span>
                 </div>
                 <h3 class="text-gray-600 text-sm font-medium mb-1">Chiffre d'affaires</h3>
-                <p class="text-3xl font-bold text-gray-900">12 397 €</p>
+                <p class="text-3xl font-bold text-gray-900">{{ stats.revenue | currency:'XOF' }}</p>
             </div>
 
         </div>
@@ -144,6 +128,9 @@
                                 Date
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Client
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Destinataire
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -160,8 +147,95 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="ordersTableBody" class="bg-white divide-y divide-gray-200">
-                        <!-- Orders will be inserted here by JavaScript -->
+                    <tbody  *ngIf="orders$ | async as orders" id="ordersTableBody" class="bg-white divide-y divide-gray-200">
+                        
+
+                        <tr *ngFor="let order of orders" class="border-b border-gray-200">
+
+                            <!-- ID -->
+                            <td class="px-6 py-4">
+                                <span class="font-semibold text-rose-600">
+                                    {{ order.reference }}
+                                </span>
+                            </td>
+
+                            <!-- Date -->
+                            <td class="px-6 py-4 text-gray-700">
+                                {{ order.created_at | date:'dd/MM/yyyy' }}
+                            </td>
+
+                            <!-- Destinataire -->
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">
+                                    {{ order.user?.name }}
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    {{ order.user?.phone }}
+                                </div>
+                            </td>
+
+                            <!-- Destinataire -->
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-gray-900">
+                                    {{ order.recipient_name }}
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    {{ order.phone }}
+                                </div>
+                            </td>
+
+                            <!-- Catégorie -->
+                            <td class="px-6 py-4">
+                                <span   class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
+                                    {{
+                                    order.category?.title === 'Galant'
+                                        ? '🌹'
+                                        : order.category?.title === 'Romantique'
+                                        ? '💕'
+                                        : '👑'
+                                    }}
+                                    {{ order.category?.title }}
+                                </span>
+                            </td>
+
+                            <!-- Montant -->
+                            <td class="px-6 py-4 font-semibold text-gray-900">
+                                {{ order.amount | currency:'EUR' }}
+                            </td>
+                            <!-- Statut -->
+                            <td class="px-6 py-4">
+                                <span *ngIf="order.status.id == 1" class="status-badge status-processing"> ⚙️  En préparation </span>
+                                <span *ngIf="order.status.id == 2"  class="status-badge status-shipped"> 📦En livraison </span>
+                                <span *ngIf="order.status.id == 3"  class="status-badge status-delivered"> ✓ Livré </span>
+                                <span *ngIf="order.status.id == 4"  class="status-badge status-cancelled"> ✗ Annulé </span>
+                            </td>
+
+                            <!-- Actions -->
+
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <a  href=""  [routerLink]="['/admin/show-order', order.reference]" class="text-blue-600 hover:text-blue-800 transition-colors" title="Voir détails">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                    </a>
+                                    <button (click)="editOrder(order.id)" class="text-green-600 hover:text-green-800 transition-colors" title="Modifier">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                        </svg>
+                                    </button>
+                                    <button  (click)="deleteOrder(order.id)" class="text-red-600 hover:text-red-800 transition-colors" title="Supprimer">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+
+                        </tr>
+
+
                     </tbody>
                 </table>
             </div>

@@ -21,7 +21,7 @@
                     <!-- Nom complet -->
                     <div>
                         <label for="fullname" class="block text-rose-200 text-sm font-medium mb-2">
-                            👤 Nom complet
+                             Nom complet
                         </label>
                         <input formControlName="nameCtrl"
                             type="text" 
@@ -38,7 +38,7 @@
                     <!-- Email -->
                     <div>
                         <label for="email" class="block text-rose-200 text-sm font-medium mb-2">
-                            📧 Email
+                            Email
                         </label>
                         <input formControlName="emailCtrl"
                             type="email" 
@@ -55,7 +55,7 @@
                     <!-- Téléphone -->
                     <div>
                         <label for="phone" class="block text-rose-200 text-sm font-medium mb-2">
-                            📱 Téléphone
+                            Téléphone
                         </label>
                         <input formControlName="phoneCtrl"
                             type="tel" 
@@ -72,7 +72,7 @@
                     <!-- Password -->
                     <div>
                         <label for="password" class="block text-rose-200 text-sm font-medium mb-2">
-                            🔒 Mot de passe
+                            Mot de passe
                         </label>
                         <input formControlName="passwordCtrl"
                             type="password" 
@@ -89,7 +89,7 @@
                     <!-- Confirm Password -->
                     <div>
                         <label for="confirm-password" class="block text-rose-200 text-sm font-medium mb-2">
-                            🔒 Confirmer le mot de passe
+                             Confirmer le mot de passe
                         </label>
                         <input  formControlName="confirmpasswordCtrl"
                             type="password" 
@@ -121,12 +121,14 @@
 
                     <!-- Submit Button -->
                     <button 
+                    [disabled]="isLoading"
                         type="submit"
                         class="w-full bg-gradient-to-r from-pink-600 to-rose-700 hover:from-pink-500 hover:to-rose-600 
                                text-white font-semibold py-4 rounded-xl transition-all duration-300 
                                transform hover:scale-105 shadow-lg hover:shadow-xl"
                     >
-                        Créer mon compte
+                        <span *ngIf="!isLoading">Créer mon compte</span>
+    <span *ngIf="isLoading">Inscription en cours...</span>
                     </button>
 
                     <!-- Divider -->

@@ -10,6 +10,8 @@ import { Register } from './auth-layout/register/register';
 import { MyOrders } from './user-layout/my-orders/my-orders';
 import { UserLayout } from './user-layout/user-layout';
 import { AdminLayout } from './admin-layout/admin-layout';
+import { AdminDashboard } from './admin-layout/admin-dashboard/admin-dashboard';
+import { AdminShowOrder } from './admin-show-order/admin-show-order';
 
 export const routes: Routes = [
   //Pour l'user
@@ -33,10 +35,12 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminLayout,
     children:[
-      { path: '', component: Landing }, // par défaut = Landing
+      { path: '', component: AdminDashboard }, // par défaut = Landing
       { path: 'contact', component: Contact },
       { path: 'tracking', component: Tracking },
       {path:'categories', component: CategoriesList},
+
+      {path:'show-order/:id', component: AdminShowOrder}
     ]
   },
 

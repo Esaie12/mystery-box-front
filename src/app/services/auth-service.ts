@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 
@@ -28,12 +29,19 @@ export interface LoginData {
   password: string;
 }
 
+interface User {
+  id: number;
+  email: string;
+  name: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   
-  private apiUrl = 'http://127.0.0.1:8000/api/auth'; // Remplace par ton URL API
+  private apiUrl = environment.apiUrl+'/auth';
+  //private apiUrl = 'http://127.0.0.1:8000/api/auth'; // Remplace par ton URL API
 
   constructor(private http: HttpClient) {}
 
@@ -58,6 +66,7 @@ export class AuthService {
       tap(res => {
         // Sauvegarde du token dans localStorage
         localStorage.setItem('authToken', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
       })
     );
   }
@@ -83,5 +92,17 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('authToken');
   }
-  
+
+  getUser(): User | null {
+    const userString = localStorage.getItem('user');
+    if (!userString) return null;
+
+    try {
+      return JSON.parse(userString) as User;
+    } catch (e) {
+      console.error('Impossible de parser l’utilisateur depuis localStorage', e);
+      return null;
+    }
+  }
+
 }
