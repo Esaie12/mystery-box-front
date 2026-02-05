@@ -10,39 +10,39 @@
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-6 ml-auto">
 
-    <a routerLink="/categories" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
-        Commander
-    </a>
+                <a routerLink="/categories" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+                    Commander
+                </a>
 
-    <a routerLink="/tracking" routerLinkActive="active"
-       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
-        Suivre commande
-    </a>
+                <a routerLink="/tracking" routerLinkActive="active"
+                class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+                    Suivre commande
+                </a>
 
-    <a *ngIf="loginService.isLoggedIn()" routerLink="/my-orders" routerLinkActive="active"
-       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
-        Mes commandes
-    </a>
+                <a *ngIf="loginService.isLoggedIn()" routerLink="/my-orders" routerLinkActive="active"
+                class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+                    Mes commandes
+                </a>
 
-    <a routerLink="/contact" routerLinkActive="active"
-       class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
-        Contact
-    </a>
+                <a routerLink="/contact" routerLinkActive="active"
+                class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+                    Contact
+                </a>
 
-    <!-- Connexion = bouton desktop -->
-    <a *ngIf="!loginService.isLoggedIn()" routerLink="/login"
-       class="ml-4 bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition">
-        Connexion
-    </a>
+                <!-- Connexion = bouton desktop -->
+                <a *ngIf="!loginService.isLoggedIn()" routerLink="/login"
+                class="ml-4 bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition">
+                    Connexion
+                </a>
 
-    <button *ngIf="loginService.isLoggedIn()" 
-            (click)="seDeconnecter()"
-            class="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-500 transition">
-        Se déconnecter
-    </button>
+                <button *ngIf="loginService.isLoggedIn()" 
+                        (click)="seDeconnecter()"
+                        class="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-500 transition">
+                    Se déconnecter
+                </button>
 
-</div>
+            </div>
 
 
             <!-- Mobile menu button -->
@@ -56,10 +56,15 @@
 
             <!-- Mobile Menu -->
             <div *ngIf="isMobileMenuOpen"  class="md:hidden flex flex-col gap-4 mt-4">
-                <a routerLink="/categories" (click)="closeMobileMenu()">🛒 Commander</a>
-                <a routerLink="/tracking" (click)="closeMobileMenu()">📦 Suivre commande</a>
-                <a routerLink="/contact" (click)="closeMobileMenu()">💬 Contact</a>
-                <a routerLink="/login" (click)="closeMobileMenu()">🔐 Connexion</a>
+                <a routerLink="/categories" (click)="closeMobileMenu()">Commander</a>
+                <a routerLink="/tracking" (click)="closeMobileMenu()"> Suivre commande</a>
+                <a *ngIf="loginService.isLoggedIn()" routerLink="/my-orders" routerLinkActive="active"
+                    class="text-rose-200 hover:text-white hover:underline hover:decoration-white transition text-sm md:text-base font-medium">
+                    Mes commandes
+                </a>
+                <a routerLink="/contact" (click)="closeMobileMenu()">Contact</a>
+                <a *ngIf="!loginService.isLoggedIn()" routerLink="/login" (click)="closeMobileMenu()">Connexion</a>
+                <button *ngIf="loginService.isLoggedIn()" (click)="seDeconnecter(); closeMobileMenu()">Se Déconnecter</button>
             </div>
 
 

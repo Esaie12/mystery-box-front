@@ -16,7 +16,7 @@
                 </div>
 
                 <!-- Form -->
-                <form class="space-y-5">
+                <form class="space-y-5" (ngSubmit)="seConnecter()">
                     
                     <!-- Email -->
                     <div>
@@ -65,8 +65,8 @@
 
                     <!-- Submit Button -->
                     <button 
-                        (click)="seConnecter()"
-                        [disabled]="isLoading"
+                       type="submit"
+                         [disabled]="!data.userEmail || !data.userPassword || isLoading"
                         class="w-full bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 
                                text-white font-semibold py-4 rounded-xl transition-all duration-300 
                                transform hover:scale-105 shadow-lg hover:shadow-xl"

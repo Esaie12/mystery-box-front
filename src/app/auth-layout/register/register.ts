@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService, RegisterData } from '../../services/auth-service';
 import { finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Register {
    
+  private toastr = inject(ToastrService);
   constructor(private authService: AuthService ) {}
   
   private fb = inject(FormBuilder);
@@ -77,12 +79,41 @@ export class Register {
     return password === confirm ? null : { passwordMismatch: true };
   }
 
+  private getFieldLabel(controlName: string): string {
+    const labels: Record<string, string> = {
+      nameCtrl: 'Nom',
+      emailCtrl: 'Email',
+      phoneCtrl: 'Téléphone',
+      passwordCtrl: 'Mot de passe',
+      confirmpasswordCtrl: 'Confirmation du mot de passe',
+      acceptCtrl: 'Conditions générales'
+    };
+
+    return labels[controlName] || controlName;
+  }
+
+
   sendInformation() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      console.warn('❌ Formulaire invalide', this.form.errors, this.form.value);
+
+      const invalidFields: string[] = [];
+
+      Object.keys(this.form.controls).forEach(key => {
+        const control = this.form.get(key);
+        if (control && control.invalid) {
+          invalidFields.push(this.getFieldLabel(key));
+        }
+      });
+
+      const message = `Champs invalides : ${invalidFields.join(', ')}`;
+
+      console.warn('❌ Formulaire invalide', invalidFields, this.form.errors);
+      this.toastr.error(message, 'Formulaire invalide');
+
       return;
     }
+
 
     const payload: RegisterData = {
       name: this.form.value.nameCtrl!,
@@ -101,7 +132,7 @@ export class Register {
       })
     ).subscribe({
       next: (res) => {
-        console.log('✅ Inscription réussie !', res);
+        console.log('✅ Inscription réussie !'); //, res
         this.router.navigate(['/categories']);
       },
       error: (err) => {
@@ -109,9 +140,17 @@ export class Register {
         // Gestion des erreurs de validation venant du backend
         if (err.error?.errors) {
           Object.keys(err.error.errors).forEach(field => {
+            const message = err.error.errors[field][0];
+
+            console.error(`⛔ ${field}: ${message}`);
+
+            // Toast par champ
+            this.toastr.error(message, 'Erreur de validation');
+
+            // Liaison avec le form control
             const control = this.form.get(field + 'Ctrl');
             if (control) {
-              control.setErrors({ backend: err.error.errors[field][0] });
+              control.setErrors({ backend: message });
             }
           });
         }

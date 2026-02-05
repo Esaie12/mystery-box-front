@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { finalize } from 'rxjs';
 })
 export class Login {
 
+  private toastr = inject(ToastrService);
   data ={
     userEmail:"",
     userPassword:"",
@@ -27,25 +29,32 @@ export class Login {
 
   seConnecter() {
 
-    this.isLoading = true;
-
-    this.loginService.login({
-      email: this.data.userEmail,
-      password: this.data.userPassword
-    }).pipe(
-      finalize(() => {
-        this.isLoading = false; // Toujours reset
-      })
-    ).subscribe({
-      next: (res) => {
-       // console.log('Connecté !', res);
-        this.router.navigate(['/categories']);
-      },
-      error: (err) => {
-        console.error('Erreur connexion', err);
-        // Ici plus besoin de reset isLoading
-      }
-    });
+  if (!this.data.userEmail || !this.data.userPassword) {
+    this.toastr.error(
+      'Veuillez saisir votre email et votre mot de passe',
+      'Champs obligatoires'
+    );
+    return;
   }
+
+  this.isLoading = true;
+
+  this.loginService.login({
+    email: this.data.userEmail,
+    password: this.data.userPassword
+  }).pipe(
+    finalize(() => {
+      this.isLoading = false;
+    })
+  ).subscribe({
+    next: () => {
+      this.router.navigate(['/categories']);
+    },
+    error: (err) => {
+      console.error('Erreur connexion', err);
+    }
+  });
+}
+
 
 }

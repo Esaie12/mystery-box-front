@@ -7,6 +7,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckoutService } from '../../services/checkout-service';
 import { AuthService } from '../../services/auth-service';
+import { ToastrService } from 'ngx-toastr';
+import {
+  openKkiapayWidget,
+  addKkiapayListener,
+  removeKkiapayListener,
+} from "kkiapay";
 
 @Component({
   selector: 'app-checkout',
@@ -21,11 +27,12 @@ export class Checkout {
   categoryService = inject(CategoryService);
   checkoutService = inject(CheckoutService);
   private authService = inject(AuthService);
-
+  private toastr = inject(ToastrService);
   private token = "";
 
   category$!: Observable<Category>;
   error?: string;
+  categoryData!: Category;
 
   private fb = inject(FormBuilder);
 
@@ -37,6 +44,7 @@ export class Checkout {
     const token = this.authService.getToken();
     if (!token) {
       console.warn('Utilisateur non connecté, redirection vers login');
+      this.toastr.error('Utilisateur non connecté, redirection vers login', 'Erreur');
       this.router.navigate(['/login']);
       return;
     }
@@ -101,48 +109,112 @@ export class Checkout {
   
 
   submitOrder() {
-    
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       console.warn('❌ Formulaire invalide');
 
-      // 🔹 Parcourir chaque contrôle et afficher les erreurs
       Object.keys(this.form.controls).forEach(key => {
         const control = this.form.get(key);
         if (control && control.invalid) {
           console.error(`⚠️ Erreurs sur ${key}:`, control.errors);
         }
       });
-    
+
       return;
     }
 
-    // ✅ Données complètes à envoyer à l’API
-    const payload = {
-      category_id: this.categoryId,
-      ...this.form.value
-    };
+    // Formulaire valide ✅ → lancer le paiement
+    this.openPaymentWidget();
+  }
 
-    // 🔥 1️⃣ Afficher en console
-    //console.log('📦 Données envoyées :', payload);
+  private openPaymentWidget() {
+    if (!this.categoryData) {
+      console.error("❌ Catégorie non chargée");
+      return;
+    }
+
+    const price = Number(this.categoryData.price);
+    if (isNaN(price) || price <= 0) {
+      console.error("❌ Prix invalide pour la catégorie");
+      return;
+    }
+
+    openKkiapayWidget({
+      amount: price,
+      api_key: "13ad8b50029111f190dfcbb2012fee53",
+      sandbox: true
+    });
+  }
+
+  // Étape 3 : après paiement réussi, créer la commande
+  private onPaymentSuccess() {
+    console.log("✅ Paiement réussi");
 
     const token = this.authService.getToken();
-
     if (!token) {
       this.error = 'Vous devez être connecté';
       return;
     }
 
-    this.checkoutService.createOrder(payload,token).subscribe({
+    const payload = {
+      category_id: this.categoryId,
+      ...this.form.value
+    };
+
+    this.checkoutService.createOrder(payload, token).subscribe({
       next: (res) => {
         console.log('✅ Commande créée', res);
+        this.toastr.success('Commande effectuée avec succès !');
         this.router.navigate(['/my-orders']);
       },
       error: (err) => {
-        console.error('❌ Erreur lors de la commande', err);
+        console.error('❌ Erreur lors de la création de la commande', err);
+        this.toastr.error('Erreur lors de la création de la commande');
+      }
+    });
+  }
+  
+
+  title = 'kkiapay-sample-project';
+
+  open() {
+
+    if (!this.categoryData) {
+      console.error("❌ Catégorie non chargée");
+      return;
+    }
+
+
+     const price = Number(this.categoryData.price);
+    if (isNaN(price) || price <= 0) {
+      console.error("❌ Prix invalide pour la catégorie");
+      return;
+    }
+
+    openKkiapayWidget({
+      amount: price,
+      api_key: "13ad8b50029111f190dfcbb2012fee53",
+      sandbox: true,
+    })
+  }  
+
+  successHandler() {
+    console.log("payment success...");
+  }
+
+  ngOnInit() {
+
+    this.category$.subscribe({
+      next: (cat) => {
+        this.categoryData = cat;
+      },
+      error: (err) => {
+        console.error("Impossible de récupérer la catégorie", err);
       }
     });
 
+    //addKkiapayListener('success',this.successHandler)
+    addKkiapayListener('success', () => this.onPaymentSuccess());
   }
 
 }
