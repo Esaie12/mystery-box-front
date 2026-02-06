@@ -12,23 +12,28 @@ import { UserLayout } from './user-layout/user-layout';
 import { AdminLayout } from './admin-layout/admin-layout';
 import { AdminDashboard } from './admin-layout/admin-dashboard/admin-dashboard';
 import { AdminShowOrder } from './admin-show-order/admin-show-order';
+
+import { Comming } from './single-layout/comming/comming';
+import { comingSoonGuard } from './guards/coming-soon-guard';
 import { AdminProductsComponent  } from './admin-products/admin-products.component';
 import{AdminUsersComponent} from './admin-users/admin-users';
 
+
 export const routes: Routes = [
+  {path:'coming-soon',component:Comming},
   //Pour l'user
   {
     path: '',
     component: UserLayout,
     children:[
-      { path: '', component: Landing }, // par défaut = Landing
-      { path: 'contact', component: Contact },
-      { path: 'tracking', component: Tracking },
-      {path:'categories', component: CategoriesList},
-      { path: 'checkout/:id', component: Checkout },
-      { path: 'my-orders', component: MyOrders },
-      {path:'login', component: Login, canActivate:[authGuard]},
-      {path:'register', component: Register, canActivate:[authGuard]},
+      { path: '', component: Landing , canActivate:[comingSoonGuard]}, // par défaut = Landing
+      { path: 'contact', component: Contact , canActivate:[comingSoonGuard]},
+      { path: 'tracking', component: Tracking , canActivate:[comingSoonGuard]},
+      {path:'categories', component: CategoriesList, canActivate:[comingSoonGuard]},
+      { path: 'checkout/:id', component: Checkout, canActivate:[comingSoonGuard] },
+      { path: 'my-orders', component: MyOrders ,canActivate:[comingSoonGuard] },
+      {path:'login', component: Login, canActivate:[authGuard, comingSoonGuard]},
+      {path:'register', component: Register, canActivate:[authGuard,comingSoonGuard ]},
     ]
   },
 
@@ -38,13 +43,8 @@ export const routes: Routes = [
     component: AdminLayout,
     children:[
       { path: '', component: AdminDashboard },
-       // par défaut = Landing
-      { path: 'contact', component: Contact },
       { path: 'products', component: AdminProductsComponent  },
       { path: 'users', component: AdminUsersComponent },
-      { path: 'tracking', component: Tracking },
-      {path:'categories', component: CategoriesList},
-
       {path:'show-order/:id', component: AdminShowOrder}
     ]
   },
