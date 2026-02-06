@@ -12,8 +12,12 @@ import { UserLayout } from './user-layout/user-layout';
 import { AdminLayout } from './admin-layout/admin-layout';
 import { AdminDashboard } from './admin-layout/admin-dashboard/admin-dashboard';
 import { AdminShowOrder } from './admin-show-order/admin-show-order';
+
 import { Comming } from './single-layout/comming/comming';
 import { comingSoonGuard } from './guards/coming-soon-guard';
+import { AdminProductsComponent  } from './admin-products/admin-products.component';
+import{AdminUsersComponent} from './admin-users/admin-users';
+
 
 export const routes: Routes = [
   {path:'coming-soon',component:Comming},
@@ -38,11 +42,9 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminLayout,
     children:[
-      { path: '', component: AdminDashboard }, // par défaut = Landing
-      { path: 'contact', component: Contact },
-      { path: 'tracking', component: Tracking },
-      {path:'categories', component: CategoriesList},
-
+      { path: '', component: AdminDashboard },
+      { path: 'products', component: AdminProductsComponent  },
+      { path: 'users', component: AdminUsersComponent },
       {path:'show-order/:id', component: AdminShowOrder}
     ]
   },

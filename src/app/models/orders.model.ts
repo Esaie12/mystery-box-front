@@ -1,13 +1,6 @@
 export interface OrderTracking {
-  id:number,
+  id: number;
   reference: string;
-  /*category: string;
-  status: string;
-  date_ordered: string;
-  delivery_date: string;
-  recipient_address: string;
-  amount: number;
-  history?: { step: string; date: string; note: string }[];*/
 }
 
 export interface OrdersResponse {
@@ -43,7 +36,7 @@ export interface Order {
 
   // Items liés avec produit
   items?: {
-    id: number; 
+    id: number;
     quantity: number;
     product: {
       id: number;
@@ -56,13 +49,13 @@ export interface Order {
 
   status: {
     id: number;
-    title: string;    // ex: "En livraison"
-    emoji: string;   // ex: "🚚"
-    message: string; // ex: "Votre commande est en cours de livraison"
+    title: string;
+    emoji: string;
+    message: string;
   };
 
   created_at: string;
-  updated_at: string;
+  updated_at: string; // obligatoire pour éviter l'erreur TS
 }
 
 export interface OrderStatusStat {
@@ -82,26 +75,25 @@ export interface AdminOrder {
   reference: string;
   amount: number;
   created_at: string;
+  updated_at: string; // ajouté
 
   recipient_name: string;
   recipient_sex: 'Femme' | 'Homme' | 'Autre';
   phone: string;
   address: string;
 
-  // Message
   message?: string | null;
   anonymous: boolean;
 
-  // Delivery
   delivery_date: string;
   delivery_instructions?: string | null;
 
   user?: {
     id: number;
     name: string;
-    phone?:string
+    phone?: string;
   };
- 
+
   category: {
     id: number;
     title: string;
@@ -113,9 +105,21 @@ export interface AdminOrder {
     title: string;
     emoji: string;
   };
+
+   // ✅ Ajouter items pour les produits
+  items?: {
+    id: number;
+    quantity: number;
+    product: {
+      id: number;
+      name: string;
+      icon?: string | null;
+      category_id?: number | null;
+      price?: number;
+    };
+  }[];
 }
 
 export interface AdminOrdersListResponse {
-  orders: Order[];
+  orders: AdminOrder[];
 }
-
