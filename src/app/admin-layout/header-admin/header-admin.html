@@ -1,7 +1,7 @@
 <nav class="bg-gradient-to-r from-rose-600 to-red-700 text-white shadow-lg">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                
+
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
                     <div class="text-2xl">🎁</div>
@@ -13,29 +13,29 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center gap-1">
-                    
+
                     <!-- Dashboard -->
-                    <a routerLink="/admin" href="" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
+                    <a routerLink="/admin" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
                         🏠 Dashboard
                     </a>
 
                     <!-- Commandes (with dropdown) -->
-                    <a routerLink="/admin" href="" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
+                    <a routerLink="/admin"  class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
                         📦 Commandes
                     </a>
 
                     <!-- Produits (with dropdown) -->
-                    <a routerLink="/admin" href="" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
+                    <a routerLink="/admin/products" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
                        🎁 Produits
                     </a>
 
                     <!-- Clients -->
-                    <a routerLink="/admin" href="" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
+                    <a routerLink="/admin/users"  class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
                         👥 Clients
                     </a>
 
                     <!-- Statistiques (with dropdown) -->
-                    <a routerLink="/admin" href="" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
+                    <a routerLink="/admin" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium">
                        📊 Statistiques
                     </a>
 
@@ -72,8 +72,8 @@
             </div>
         </div>
 
-        <!-- Mobile Menu --> 
-  
+        <!-- Mobile Menu -->
+
         <div id="mobileMenu" [class.active]="mobileMenuOpen" class="mobile-menu md:hidden bg-rose-700 border-t border-rose-500">
             <div class="container mx-auto px-4 py-4 space-y-2">
                 <a routerLink="/admin" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
@@ -82,10 +82,10 @@
                 <a routerLink="/admin" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
                     📦 Commandes
                 </a>
-                <a routerLink="/admin" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                <a routerLink="/admin/products" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
                     🎁 Produits
                 </a>
-                <a routerLink="/admin" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                <a routerLink="/admin/users" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
                     👥 Clients
                 </a>
                 <a routerLink="/admin" class="block px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">

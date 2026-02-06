@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: '../header-admin/header-admin.css',
 })
 export class AdminDashboard {
-   
+
 
   adminService = inject(CheckoutService);
 
@@ -23,7 +23,7 @@ export class AdminDashboard {
     this.stats$ = this.adminService.adminGetOrdersStats();
 
     this.orders$ = this.adminService.adminGetOrders().pipe(
-      map(res => res.orders) 
+      map(res => res.orders)
     );
   }
 
@@ -34,5 +34,5 @@ export class AdminDashboard {
   deleteOrder(idOrder:number){}
 
 
-  
+
 }

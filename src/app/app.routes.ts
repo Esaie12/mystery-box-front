@@ -12,6 +12,8 @@ import { UserLayout } from './user-layout/user-layout';
 import { AdminLayout } from './admin-layout/admin-layout';
 import { AdminDashboard } from './admin-layout/admin-dashboard/admin-dashboard';
 import { AdminShowOrder } from './admin-show-order/admin-show-order';
+import { AdminProductsComponent  } from './admin-products/admin-products.component';
+import{AdminUsersComponent} from './admin-users/admin-users';
 
 export const routes: Routes = [
   //Pour l'user
@@ -35,8 +37,11 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminLayout,
     children:[
-      { path: '', component: AdminDashboard }, // par défaut = Landing
+      { path: '', component: AdminDashboard },
+       // par défaut = Landing
       { path: 'contact', component: Contact },
+      { path: 'products', component: AdminProductsComponent  },
+      { path: 'users', component: AdminUsersComponent },
       { path: 'tracking', component: Tracking },
       {path:'categories', component: CategoriesList},
 
