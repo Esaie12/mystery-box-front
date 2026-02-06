@@ -1,12 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';// Pour le routing
 import { Observable } from 'rxjs';
-import { UsersService, User } from '../services/users.service';
+import { UsersService } from '../services/users.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-admin-users',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule], // <-- Ajouter RouterModule ici to avoid error
   templateUrl: './admin-users.html',
   styleUrls: ['./admin-users.css']
 })

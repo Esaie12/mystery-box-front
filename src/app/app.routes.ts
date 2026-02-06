@@ -14,6 +14,8 @@ import { AdminDashboard } from './admin-layout/admin-dashboard/admin-dashboard';
 import { AdminShowOrder } from './admin-show-order/admin-show-order';
 import { AdminProductsComponent  } from './admin-products/admin-products.component';
 import{AdminUsersComponent} from './admin-users/admin-users';
+import { AdminProductShow } from './admin-products/admin-product-show/admin-product-show';
+import { AdminUserShow } from './admin-users/admin-user-show/admin-user-show';
 
 export const routes: Routes = [
   //Pour l'user
@@ -41,10 +43,11 @@ export const routes: Routes = [
        // par défaut = Landing
       { path: 'contact', component: Contact },
       { path: 'products', component: AdminProductsComponent  },
+      { path: 'products/:id', component: AdminProductShow },
       { path: 'users', component: AdminUsersComponent },
       { path: 'tracking', component: Tracking },
       {path:'categories', component: CategoriesList},
-
+      { path: 'users/:id', component: AdminUserShow }, // <-- Route show user
       {path:'show-order/:id', component: AdminShowOrder}
     ]
   },
