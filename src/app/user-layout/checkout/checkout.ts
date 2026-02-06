@@ -147,7 +147,7 @@ export class Checkout {
   }
 
   // Étape 3 : après paiement réussi, créer la commande
-  private onPaymentSuccess() {
+  private onPaymentSuccess(transactionId: string) {
     console.log("✅ Paiement réussi");
 
     const token = this.authService.getToken();
@@ -158,6 +158,7 @@ export class Checkout {
 
     const payload = {
       category_id: this.categoryId,
+      transaction_id: transactionId,
       ...this.form.value
     };
 
@@ -214,7 +215,10 @@ export class Checkout {
     });
 
     //addKkiapayListener('success',this.successHandler)
-    addKkiapayListener('success', () => this.onPaymentSuccess());
+    addKkiapayListener('success', (response: any) => {
+      console.log('✅ Paiement réussi', response);
+      this.onPaymentSuccess(response.transactionId);
+    });
   }
 
 }
