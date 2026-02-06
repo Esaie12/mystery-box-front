@@ -2,7 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Product, ProductsService } from '../services/product-service';
+import {  ProductsService } from '../services/product-service';
+import { Product } from '../models/product.model';
 
 @Component({
   selector: 'app-admin-products',

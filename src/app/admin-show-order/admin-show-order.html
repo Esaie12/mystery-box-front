@@ -1,6 +1,6 @@
 <main class="container mx-auto px-4 py-8">
         <div class="max-w-7xl mx-auto"  *ngIf="order$ | async as order">
-            
+
             <!-- Breadcrumb -->
             <div class="mb-6">
                 <div class="flex items-center gap-2 text-sm text-gray-600">
@@ -46,10 +46,10 @@
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8">
-                
+
                 <!-- LEFT: Order Details (2 columns) -->
                 <div class="lg:col-span-2 space-y-6">
-                    
+
                     <!-- Customer Information -->
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
                         <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
@@ -135,7 +135,7 @@
                             </svg>
                             Détails de la commande
                         </h3>
-                        
+
                         <!-- Category -->
                         <div class="mb-4">
                             <p class="text-sm text-gray-600 mb-2">Catégorie sélectionnée</p>
@@ -162,7 +162,7 @@
                                     </div>
                                     <span class="text-gray-900 font-semibold">{{prod.quantity}}x</span>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -275,11 +275,11 @@
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200 sticky-actions">
                         <h3 class="text-xl font-bold text-gray-900 mb-6">Actions</h3>
-                        
+
                         <div class="space-y-3">
-                            
+
                             <!-- Change Products -->
-                            <button 
+                            <button
                                 onclick="changeProducts()"
                                 class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
                             >
@@ -290,7 +290,7 @@
                             </button>
 
                             <!-- Mark as Shipped -->
-                            <button 
+                            <button
                                 onclick="markAsShipped()"
                                 class="w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
                             >
@@ -301,7 +301,7 @@
                             </button>
 
                             <!-- Mark as Delivered -->
-                            <button 
+                            <button
                                 onclick="markAsDelivered()"
                                 class="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
                             >
@@ -312,7 +312,7 @@
                             </button>
 
                             <!-- Cancel Order -->
-                            <button 
+                            <button
                                 onclick="cancelOrder()"
                                 class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
                             >
@@ -325,7 +325,7 @@
                             <div class="border-t border-gray-200 my-4"></div>
 
                             <!-- Additional Actions -->
-                            <button 
+                            <button
                                 onclick="sendNotification()"
                                 class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
                             >
@@ -335,7 +335,7 @@
                                 Envoyer une notification
                             </button>
 
-                            <a 
+                            <a
                                 href="mailto:jean.dupont@exemple.com"
                                 class="w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-medium flex items-center justify-center gap-2"
                             >
@@ -373,7 +373,7 @@
                         <!-- Notes -->
                         <div class="mt-6 pt-6 border-t border-gray-200">
                             <h4 class="font-semibold text-gray-900 mb-3 text-sm">Notes internes</h4>
-                            <textarea 
+                            <textarea
                                 rows="3"
                                 placeholder="Ajouter une note..."
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm"

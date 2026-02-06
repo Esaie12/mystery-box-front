@@ -1,0 +1,54 @@
+<main class="container mx-auto px-4 py-8" *ngIf="user$ | async as user">
+
+  <!-- Breadcrumb -->
+  <div class="mb-6 text-sm text-gray-600 flex items-center gap-2">
+    <a routerLink="/admin" class="hover:text-rose-600">Dashboard</a>
+    <span>/</span>
+    <a routerLink="/admin/users" class="hover:text-rose-600">Utilisateurs</a>
+    <span>/</span>
+    <span class="font-semibold text-gray-900">{{ user.name }}</span>
+  </div>
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-900">{{ user.name }}</h2>
+    <p class="text-gray-600 mt-2">{{ user.email }}</p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-8">
+
+    <!-- LEFT -->
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- Infos -->
+      <div class="bg-white rounded-xl p-6 border">
+        <h3 class="text-xl font-bold mb-4">Informations utilisateur</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-sm text-gray-600">Nom</p>
+            <p class="font-semibold">{{ user.name }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Email</p>
+            <p class="font-semibold">{{ user.email }}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Rôle</p>
+            <p class="font-semibold">{{ user.role || '-' }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div>
+      <div class="bg-white rounded-xl p-6 border space-y-3">
+        <button routerLink="/admin/users" class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+          Retour
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>

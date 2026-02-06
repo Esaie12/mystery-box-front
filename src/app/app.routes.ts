@@ -17,7 +17,8 @@ import { Comming } from './single-layout/comming/comming';
 import { comingSoonGuard } from './guards/coming-soon-guard';
 import { AdminProductsComponent  } from './admin-products/admin-products.component';
 import{AdminUsersComponent} from './admin-users/admin-users';
-
+import { AdminProductShow } from './admin-products/admin-product-show/admin-product-show';
+import { AdminUserShow } from './admin-users/admin-user-show/admin-user-show';
 
 export const routes: Routes = [
   {path:'coming-soon',component:Comming},
@@ -44,7 +45,13 @@ export const routes: Routes = [
     children:[
       { path: '', component: AdminDashboard },
       { path: 'products', component: AdminProductsComponent  },
+      { path: 'products/:id', component: AdminProductShow },
+     { path: 'users/:id', component: AdminUserShow },
+
       { path: 'users', component: AdminUsersComponent },
+      { path: 'tracking', component: Tracking },
+      {path:'categories', component: CategoriesList},
+
       {path:'show-order/:id', component: AdminShowOrder}
     ]
   },
