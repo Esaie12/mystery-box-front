@@ -21,7 +21,7 @@ import { AdminProductShow } from './admin-products/admin-product-show/admin-prod
 import { AdminUserShow } from './admin-users/admin-user-show/admin-user-show';
 
 export const routes: Routes = [
-  {path:'coming-soon',component:Comming},
+  {path:'coming-soon',component:Comming , canActivate:[comingSoonGuard]},
   //Pour l'user
   {
     path: '',

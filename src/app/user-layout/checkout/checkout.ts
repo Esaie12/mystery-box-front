@@ -13,6 +13,7 @@ import {
   addKkiapayListener,
   removeKkiapayListener,
 } from "kkiapay";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -141,8 +142,8 @@ export class Checkout {
 
     openKkiapayWidget({
       amount: price,
-      api_key: "13ad8b50029111f190dfcbb2012fee53",
-      sandbox: true
+      api_key: environment.kkiapayPublicKey ,
+      sandbox: environment.sandBoxPayment
     });
   }
 

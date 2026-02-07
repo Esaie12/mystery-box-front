@@ -2,13 +2,13 @@ import { Component, inject } from '@angular/core';
 import { CheckoutService } from '../../services/checkout-service';
 import { OrderTracking } from '../../models/orders.model';
 import { catchError, map, Observable, of } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-tracking',
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule,RouterLink,CurrencyPipe, DatePipe],
   templateUrl: './tracking.html',
   styleUrls: ['./tracking.css'],
   standalone: true
