@@ -20,7 +20,7 @@ import{AdminUsersComponent} from './admin-users/admin-users';
 
 
 export const routes: Routes = [
-  {path:'coming-soon',component:Comming},
+  {path:'coming-soon',component:Comming , canActivate:[comingSoonGuard]},
   //Pour l'user
   {
     path: '',

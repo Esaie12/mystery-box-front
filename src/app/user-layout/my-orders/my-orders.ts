@@ -1,4 +1,4 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Order } from '../../models/orders.model';
 import { CheckoutService } from '../../services/checkout-service';
@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-orders',
-  imports: [CommonModule,RouterLink,CurrencyPipe],
+  imports: [CommonModule,RouterLink,CurrencyPipe,DatePipe],
   templateUrl: './my-orders.html',
   styleUrl: './my-orders.css',
 })

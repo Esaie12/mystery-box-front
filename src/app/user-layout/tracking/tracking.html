@@ -49,10 +49,10 @@
                                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                                     <div>
                                         <h3 class="font-playfair text-2xl font-bold mb-2">Commande #{{ order.reference }}</h3>
-                                        <p class="text-rose-200">Passée le 10 février 2026</p>
+                                        <p class="text-rose-200">Passée le {{ order.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
                                     </div>
                                     <div class="px-4 py-2 bg-green-500/20 border border-green-400/50 rounded-full text-green-300 font-semibold">
-                                        ✓ En livraison
+                                        {{order.status.emoji}} {{order.status.title}}
                                     </div>
                                 </div>
                             </div>
@@ -60,28 +60,27 @@
                             <!-- Order Details -->
                             <div class="grid md:grid-cols-2 gap-6 mb-8">
                                 <div>
-                                    <h4 class="text-rose-300 font-semibold mb-2">📦 Catégorie</h4>
-                                    <p class="text-white text-lg">Romantique</p>
+                                    <h4 class="text-rose-300 font-semibold mb-2">{{order.category.icon}} Catégorie</h4>
+                                    <p class="text-white text-lg">{{order.category.title}}</p>
                                 </div>
                                 <div>
                                     <h4 class="text-rose-300 font-semibold mb-2">📅 Livraison prévue</h4>
-                                    <p class="text-white text-lg">14 février 2026</p>
+                                    <p class="text-white text-lg">{{order.delivery_date}}</p>
                                 </div>
                                 <div>
                                     <h4 class="text-rose-300 font-semibold mb-2">📍 Adresse</h4>
-                                    <p class="text-white">123 Rue de l'Amour<br>75001 Paris, France</p>
+                                    <p class="text-white">{{order.address}}</p>
                                 </div>
-                                <div>
+                                <div> 
                                     <h4 class="text-rose-300 font-semibold mb-2">💰 Montant</h4>
-                                    <p class="text-white text-lg font-semibold">49,99 €</p>
+                                    <p class="text-white text-lg font-semibold">{{order.amount | currency : 'XOF'}}</p>
                                 </div>
                             </div>
 
                             <!-- Timeline -->
-                            <div class="space-y-6">
+                            <!--div class="space-y-6">
                                 <h4 class="font-playfair text-2xl font-bold mb-6">Historique de livraison</h4>
                                 
-                                <!-- Step 1 - Complete -->
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center">
                                         <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
@@ -96,7 +95,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 2 - Complete -->
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center">
                                         <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
@@ -111,7 +109,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 3 - Current -->
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center">
                                         <div class="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold animate-pulse">
@@ -126,7 +123,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 4 - Pending -->
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center">
                                         <div class="w-10 h-10 rounded-full bg-white/10 border-2 border-rose-300/30 flex items-center justify-center text-rose-300">
@@ -139,7 +135,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div-->
 
                             <!-- Additional Info -->
                             <div class="mt-8 p-6 bg-rose-500/10 border border-rose-300/30 rounded-xl">
